@@ -36,6 +36,7 @@ authentication=[]
 gainedAccess=[]
 vulnType=[]
 exploitAvailible=[]
+temp=[]
 
 confidentialityImpactTup=('Complete','None','Partial')
 integrityImpactTup=('Complete','None','Partial')
@@ -58,6 +59,9 @@ def parse_arguments(): # Function for parsing command line arguments
 def createFullUrl(smin,smax,year,month,page):
 	url = "http://www.cvedetails.com/vulnerability-list.php?vendor_id=0&product_id=0&version_id=0&page="+str(page)+"&cvssscoremin="+str(smin)+"&cvssscoremax="+str(smax)+"&year="+str(year)+"&month="+str(month)+"&order=3"
 	print (url)
+	
+	
+	
 	return url
 
 def getSoupHTML(url):

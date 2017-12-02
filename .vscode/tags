@@ -1,0 +1,68 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ArgumentParser	../CveDetailsScaper.py	/^from argparse import ArgumentParser$/;"	kind:namespace	line:8
+BeautifulSoup	../CveDetailsScaper.py	/^from bs4 import BeautifulSoup$/;"	kind:namespace	line:6
+CveDetailsScaper.py	../CveDetailsScaper.py	1;"	kind:file	line:1
+ExcelFile	../CveDetailsScaper.py	/^from pandas import ExcelFile$/;"	kind:namespace	line:12
+ExcelWriter	../CveDetailsScaper.py	/^from pandas import ExcelWriter$/;"	kind:namespace	line:11
+MIMEBase	../CveDetailsScaper.py	/^from email.mime.base import MIMEBase$/;"	kind:namespace	line:16
+MIMEMultipart	../CveDetailsScaper.py	/^from email.mime.multipart import MIMEMultipart$/;"	kind:namespace	line:15
+MIMEText	../CveDetailsScaper.py	/^from email.mime.text import MIMEText$/;"	kind:namespace	line:17
+accessComplexity	../CveDetailsScaper.py	/^accessComplexity=[]$/;"	kind:variable	line:34
+accessComplexityTup	../CveDetailsScaper.py	/^accessComplexityTup=('Low','Medium','High') #Low means , accessible easily.$/;"	kind:variable	line:43
+accessLevelGainedTup	../CveDetailsScaper.py	/^accessLevelGainedTup=('None','Admin') #What is the access Level gained by exploiting this vulnerability$/;"	kind:variable	line:45
+authentication	../CveDetailsScaper.py	/^authentication=[]$/;"	kind:variable	line:35
+authenticationRequiredTup	../CveDetailsScaper.py	/^authenticationRequiredTup=('Not Required','Single System') #Single System implies that attacker requires a session.$/;"	kind:variable	line:44
+availibilityImpact	../CveDetailsScaper.py	/^availibilityImpact=[]$/;"	kind:variable	line:33
+availibilityImpactTup	../CveDetailsScaper.py	/^availibilityImpactTup=('Complete','None','Partial')$/;"	kind:variable	line:42
+calendar	../CveDetailsScaper.py	/^import calendar$/;"	kind:namespace	line:13
+checkCVE	../CveDetailsScaper.py	/^def checkCVE(cveIDList,TextList):$/;"	kind:function	line:136
+confidentialityImpact	../CveDetailsScaper.py	/^confidentialityImpact=[]$/;"	kind:variable	line:31
+confidentialityImpactTup	../CveDetailsScaper.py	/^confidentialityImpactTup=('Complete','None','Partial')$/;"	kind:variable	line:40
+createFullUrl	../CveDetailsScaper.py	/^def createFullUrl(smin,smax,year,month,page):$/;"	kind:function	line:58
+csv	../CveDetailsScaper.py	/^import requests,pprint,csv,os,datetime,re,urllib$/;"	kind:namespace	line:9
+cveIDNumber	../CveDetailsScaper.py	/^cveIDNumber=[]$/;"	kind:variable	line:23
+cvssScore	../CveDetailsScaper.py	/^cvssScore=[]$/;"	kind:variable	line:30
+datetime	../CveDetailsScaper.py	/^import datetime$/;"	kind:namespace	line:20
+datetime	../CveDetailsScaper.py	/^import requests,pprint,csv,os,datetime,re,urllib$/;"	kind:namespace	line:9
+datetime	../CveDetailsScaper.py	/^import requests,pprint,sys,datetime,re$/;"	kind:namespace	line:7
+encoders	../CveDetailsScaper.py	/^from email import encoders$/;"	kind:namespace	line:19
+exploitAvailible	../CveDetailsScaper.py	/^exploitAvailible=[]$/;"	kind:variable	line:38
+formatdate	../CveDetailsScaper.py	/^from email.utils import formatdate$/;"	kind:namespace	line:18
+gainedAccess	../CveDetailsScaper.py	/^gainedAccess=[]$/;"	kind:variable	line:36
+getCVEDetails	../CveDetailsScaper.py	/^def getCVEDetails(cveID):$/;"	kind:function	line:87
+getCVEDetails	../CveDetailsScaper.py	/^def getCVEDetails(cveid=''):$/;"	kind:function	line:91
+getCVEIds	../CveDetailsScaper.py	/^def getCVEIds(soup,cveArray):$/;"	kind:function	line:70
+getCVEPages	../CveDetailsScaper.py	/^def getCVEPages(soup):$/;"	kind:function	line:77
+getSoupHTML	../CveDetailsScaper.py	/^def getSoupHTML(url):$/;"	kind:function	line:63
+integrityImpact	../CveDetailsScaper.py	/^integrityImpact=[]$/;"	kind:variable	line:32
+integrityImpactTup	../CveDetailsScaper.py	/^integrityImpactTup=('Complete','None','Partial')$/;"	kind:variable	line:41
+main	../CveDetailsScaper.py	/^def main():$/;"	kind:function	line:211
+os	../CveDetailsScaper.py	/^import requests,pprint,csv,os,datetime,re,urllib$/;"	kind:namespace	line:9
+parse_arguments	../CveDetailsScaper.py	/^def parse_arguments(): # Function for parsing command line arguments$/;"	kind:function	line:49
+pd	../CveDetailsScaper.py	/^import pandas as pd$/;"	kind:namespace	line:10
+pprint	../CveDetailsScaper.py	/^import requests,pprint,csv,os,datetime,re,urllib$/;"	kind:namespace	line:9
+pprint	../CveDetailsScaper.py	/^import requests,pprint,sys,datetime,re$/;"	kind:namespace	line:7
+product	../CveDetailsScaper.py	/^product=[]$/;"	kind:variable	line:28
+publishDate	../CveDetailsScaper.py	/^publishDate=[]$/;"	kind:variable	line:25
+re	../CveDetailsScaper.py	/^import re$/;"	kind:namespace	line:21
+re	../CveDetailsScaper.py	/^import requests,pprint,csv,os,datetime,re,urllib$/;"	kind:namespace	line:9
+re	../CveDetailsScaper.py	/^import requests,pprint,sys,datetime,re$/;"	kind:namespace	line:7
+requests	../CveDetailsScaper.py	/^import requests,pprint,csv,os,datetime,re,urllib$/;"	kind:namespace	line:9
+requests	../CveDetailsScaper.py	/^import requests,pprint,sys,datetime,re$/;"	kind:namespace	line:7
+sendemail	../CveDetailsScaper.py	/^def sendemail(fileName):$/;"	kind:function	line:180
+smtplib	../CveDetailsScaper.py	/^import smtplib,ssl$/;"	kind:namespace	line:14
+softwareType	../CveDetailsScaper.py	/^softwareType=[]$/;"	kind:variable	line:26
+ssl	../CveDetailsScaper.py	/^import smtplib,ssl$/;"	kind:namespace	line:14
+status	../CveDetailsScaper.py	/^	status = main()$/;"	kind:variable	line:245
+summaryText	../CveDetailsScaper.py	/^summaryText=[]$/;"	kind:variable	line:24
+sys	../CveDetailsScaper.py	/^import requests,pprint,sys,datetime,re$/;"	kind:namespace	line:7
+urllib	../CveDetailsScaper.py	/^import requests,pprint,csv,os,datetime,re,urllib$/;"	kind:namespace	line:9
+vendor	../CveDetailsScaper.py	/^vendor=[]$/;"	kind:variable	line:27
+version	../CveDetailsScaper.py	/^version=[]$/;"	kind:variable	line:29
+vulnType	../CveDetailsScaper.py	/^vulnType=[]$/;"	kind:variable	line:37
+writeToExcel	../CveDetailsScaper.py	/^def writeToExcel(fileName=''):$/;"	kind:function	line:156
