@@ -19,6 +19,7 @@ from email.utils import formatdate
 from email import encoders
 import datetime
 import re
+#from StyleFrame import StyleFrame 
 
 #import requests.packages.urllib3.util.ssl_
 #print(requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS)
@@ -165,7 +166,7 @@ def writeToExcel(fileName=''):
 	print ("Writing to Excel File : "+fileName)
 	data = {'CVE ID Number': cveIDNumber, 'Summary Text': summaryText, 'Publish Date': publishDate, 'Software Type': softwareType, 'Vendor': vendor,'Product':product,'Version':version,'CVSS Score':cvssScore,'Confidentiality Impact':confidentialityImpact,'Integrity Impact':integrityImpact,'Availibility Impact':availibilityImpact,'Access Complexity':accessComplexity,'Authentication':authentication,'Gained Access':gainedAccess,'Vulnerability Type':vulnType}
 	df = pd.DataFrame(data,columns=['CVE ID Number','Publish Date', 'Software Type','Vendor','Product','Version','CVSS Score','Confidentiality Impact','Integrity Impact','Availibility Impact','Access Complexity','Authentication','Gained Access','Vulnerability Type','Summary Text'])
-	writer = ExcelWriter(fileName)
+	writer = pd.ExcelWriter(fileName)
 
 	dataFile = open("keyword.txt")
 	lines = dataFile.readlines()
@@ -191,21 +192,21 @@ def writeToExcel(fileName=''):
 	print (mailcontent)
 	data1 = {'Match Keyword': m_keyword, 'Match CVE ID' : m_cveIDNumber, 'SummaryText' : m_summaryText}
 	df1 = pd.DataFrame(data1,columns=['Match Keyword','Match CVE ID','SummaryText'])
+
 	df.to_excel(writer,'CVE Details',index=False)
 	df1.to_excel(writer,'Matched Keyword',index=False)
 	writer.save()
-	print ("Completed.\n")
+	print ("Write Excel Completed.\n")
 	return mailcontent
 
 def sendemail(fileName, mailtext):
 	textfile = 'Sending CVE data'
 	message = MIMEMultipart()
-	message['From'] = 'CVE Detail'
-	message['To'] =  'Security Team'
+	message['From'] = 'CVE Security Reporter'
+	message['To'] =  'chu_liang_han@hotmail.com'
 	subject = 'CVE Detail announcement on ' + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 	message['Subject'] = subject
-	message.attach(MIMEText('Latest CVE Detail Announcement List as attached'))
-	message.attach(MIMEText(mailtext))
+	message.attach(MIMEText('Latest CVE Detail Announcement List as attached' + '\n' + mailtext))
 
 	part = MIMEBase('application','vnd.ms-excel')
 	part.set_payload(open(fileName, "rb").read())
@@ -213,19 +214,33 @@ def sendemail(fileName, mailtext):
 	part.add_header('Content-Disposition', 'attachment; filename=CVE Report.xls')
 	message.attach(part)
 
-	smtp_server = 'smtp.gmail.com'
-	from_mail = 'tomchu12345@gmail.com'
-	to_mail = 'chu_liang_han@hotmail.com'
+	# smtp_server = 'smtp.gmail.com'
+	# from_mail = 'tomchu12345@gmail.com'
+	# to_mail = 'chu_liang_han@hotmail.com'
 
-	s = smtplib.SMTP('smtp.gmail.com', 587)
-	strGmailUser = 'tomchu12345@gmail.com'
+	# s = smtplib.SMTP('smtp.gmail.com', 587)
+	# strGmailUser = 'tomchu12345@gmail.com'
+	# strGmailPassword = 'b120888280'
+
+	#hotmail setting
+	smtp_server = 'smtp.live.com'
+	from_mail = 'chu_liang_han@hotmail.com'
+	to_mail = 'chu_liang_han@hotmail.com'
+	strGmailUser = 'chu_liang_han@hotmail.com'
 	strGmailPassword = 'b120888280'
+
+	s = smtplib.SMTP('smtp.live.com', 587)
 	s.ehlo()
 	s.starttls()
+	s.ehlo()
 	s.login(strGmailUser, strGmailPassword)
 	s.sendmail(from_mail, to_mail, message.as_string())
 	s.quit()
-	
+	print('Send Mail Completed')
+
+def line_update():
+	return
+
 def main():
 	args = parse_arguments()
 	if args.m:
@@ -256,7 +271,8 @@ def main():
 		print ("Getting Details for CVE ID: "+cve+". Completed "+str(count)+" Out of "+str(len(cveArray)))
 	
 	mail = writeToExcel(fileName)
-	#sendemail(fileName, mail)
+	sendemail(fileName, mail)
+	line_update()
 
 if __name__ == '__main__':
 	status = main()
