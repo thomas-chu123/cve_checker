@@ -49,8 +49,6 @@ accessComplexityTup=('Low','Medium','High') #Low means , accessible easily.
 authenticationRequiredTup=('Not Required','Single System') #Single System implies that attacker requires a session.
 accessLevelGainedTup=('None','Admin') #What is the access Level gained by exploiting this vulnerability
 
-
-
 def parse_arguments(): # Function for parsing command line arguments
 	parser = ArgumentParser(description='A small python script used for scraping the CVE Details website for collating the following information'+'\n'+'# CVE-ID,Severity,Product,Vendor,Summary (Primary required fields, many additional fields shall be present)')
 	parser.add_argument('-smin',help='Minimum Severity Rating',default=7)
@@ -63,9 +61,6 @@ def parse_arguments(): # Function for parsing command line arguments
 def createFullUrl(smin,smax,year,month,page):
 	url = "http://www.cvedetails.com/vulnerability-list.php?vendor_id=0&product_id=0&version_id=0&page="+str(page)+"&cvssscoremin="+str(smin)+"&cvssscoremax="+str(smax)+"&year="+str(year)+"&month="+str(month)+"&order=3"
 	print (url)
-	
-	
-	
 	return url
 
 def getSoupHTML(url):
@@ -149,7 +144,6 @@ def getCVEDetails(cveid=''):
 	gainedAccess.append(al)
 	vulnType.append(cvssData[7])
 
-
 def checkCVE(cveIDList,TextList):
 		dataFile = open("keyword.txt")
 		lines = dataFile.readlines()
@@ -158,11 +152,8 @@ def checkCVE(cveIDList,TextList):
 			keyword.append(x.split(' ')[0])
 		dataFile.close()
 		# print (keyword)
-		
 		# matchID = []
-		
 		# if any("abc" in s for s in some_list):
-		
 		# for word in keyword:
 		# 	index = 0
 		# 	for matchStr in TextList
@@ -176,7 +167,6 @@ def writeToExcel(fileName=''):
 	df = pd.DataFrame(data,columns=['CVE ID Number','Publish Date', 'Software Type','Vendor','Product','Version','CVSS Score','Confidentiality Impact','Integrity Impact','Availibility Impact','Access Complexity','Authentication','Gained Access','Vulnerability Type','Summary Text'])
 	writer = ExcelWriter(fileName)
 
-
 	dataFile = open("keyword.txt")
 	lines = dataFile.readlines()
 	keyword = []
@@ -186,21 +176,28 @@ def writeToExcel(fileName=''):
 	#checkCVE(cveIDNumber, summaryText)
 	# check if there are matched CVE data with the keyword
 	mailcontent = ''
+	m_keyword = []
+	m_cveIDNumber = []
+	m_summaryText = []
 	for word in keyword:
 				for count in range(len(cveIDNumber)):
 					if ' ' + word + ' ' in summaryText[count]:					
-						mailcontent = "Found keyword match " + word + '\n'
-						mailcontent = cveIDNumber[count] + '\n'
-						mailcontent = summaryText[count] + '\n'
+						mailcontent = mailcontent + 'Found keyword match ' + word + '\n'
+						mailcontent = mailcontent + cveIDNumber[count] + '\n'
+						mailcontent = mailcontent + summaryText[count] + '\n'
+						m_keyword.append(word)
+						m_cveIDNumber.append(cveIDNumber[count])
+						m_summaryText.append(summaryText[count])
 	print (mailcontent)
-
+	data1 = {'Match Keyword': m_keyword, 'Match CVE ID' : m_cveIDNumber, 'SummaryText' : m_summaryText}
+	df1 = pd.DataFrame(data1,columns=['Match Keyword','Match CVE ID','SummaryText'])
 	df.to_excel(writer,'CVE Details',index=False)
+	df1.to_excel(writer,'Matched Keyword',index=False)
 	writer.save()
-	print ("Completed.")
+	print ("Completed.\n")
 	return mailcontent
 
 def sendemail(fileName, mailtext):
-
 	textfile = 'Sending CVE data'
 	message = MIMEMultipart()
 	message['From'] = 'CVE Detail'
@@ -228,8 +225,6 @@ def sendemail(fileName, mailtext):
 	s.login(strGmailUser, strGmailPassword)
 	s.sendmail(from_mail, to_mail, message.as_string())
 	s.quit()
-	
-
 	
 def main():
 	args = parse_arguments()

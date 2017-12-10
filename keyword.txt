@@ -1,3 +1,9 @@
+mitrastar
+zyxel
+technicolor
+centurylink
+arris
+telnor
 broadband Broadband
 bewan Broadband
 bemultiplewan Broadband
