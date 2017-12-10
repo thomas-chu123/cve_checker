@@ -185,10 +185,11 @@ def writeToExcel(fileName=''):
 					if ' ' + word + ' ' in summaryText[count]:					
 						mailcontent = mailcontent + 'Found keyword match ' + word + '\n'
 						mailcontent = mailcontent + cveIDNumber[count] + '\n'
-						mailcontent = mailcontent + summaryText[count] + '\n'
+						mailcontent = mailcontent + summaryText[count] + '\n\n'
 						m_keyword.append(word)
 						m_cveIDNumber.append(cveIDNumber[count])
 						m_summaryText.append(summaryText[count])
+
 	print (mailcontent)
 	data1 = {'Match Keyword': m_keyword, 'Match CVE ID' : m_cveIDNumber, 'SummaryText' : m_summaryText}
 	df1 = pd.DataFrame(data1,columns=['Match Keyword','Match CVE ID','SummaryText'])
@@ -214,10 +215,10 @@ def sendemail(fileName, mailtext):
 	part.add_header('Content-Disposition', 'attachment; filename=CVE Report.xls')
 	message.attach(part)
 
+	#Gmail setting
 	# smtp_server = 'smtp.gmail.com'
 	# from_mail = 'tomchu12345@gmail.com'
 	# to_mail = 'chu_liang_han@hotmail.com'
-
 	# s = smtplib.SMTP('smtp.gmail.com', 587)
 	# strGmailUser = 'tomchu12345@gmail.com'
 	# strGmailPassword = 'b120888280'
