@@ -111,14 +111,23 @@ def getCVEDetails(cveid=''):
 	dateStr=summarySoup.text.split("\n")[3]
 	publishDate.append(dateStr.split("\t")[1 ].split(":")[1])
 	productData=[]
-	for row in table.findAll('tr')[::-1]: #Get only the last row
-		cols=row.findAll('td')
-		for i in range(len(cols)):
-			productData.append(cols[i].text.strip())
-	softwareType.append(productData[1])
-	vendor.append(productData[2])
-	product.append(productData[3])
-	version.append(productData[4])
+
+	if 'Please check again' in table.text:
+		productData.append('')
+		softwareType.append('')
+		vendor.append('')
+		product.append('')
+		version.append('')
+	else:
+		for row in table.findAll('tr')[::-1]: #Get only the last row
+			cols=row.findAll('td')
+			for i in range(len(cols)):
+				productData.append(cols[i].text.strip())
+		softwareType.append(productData[1])
+		vendor.append(productData[2])
+		product.append(productData[3])
+		version.append(productData[4])
+		
 	cvssData=[]
 	for row in cvssTable.findAll('tr'): #Get only the first row
 		cols=row.findAll('td')
@@ -176,19 +185,21 @@ def writeToExcel(fileName=''):
 	dataFile.close()
 	#checkCVE(cveIDNumber, summaryText)
 	# check if there are matched CVE data with the keyword
-	word = ''
-	count = 0
+	mailcontent = ''
 	for word in keyword:
-				for count in len(cveIDNumber):
-					if word in summaryText[count]: 
-						print ("Found keyword match {0}",word)
-						print (cveIDNumber[count], summaryText[count])
-	
+				for count in range(len(cveIDNumber)):
+					if ' ' + word + ' ' in summaryText[count]:					
+						mailcontent = "Found keyword match " + word + '\n'
+						mailcontent = cveIDNumber[count] + '\n'
+						mailcontent = summaryText[count] + '\n'
+	print (mailcontent)
+
 	df.to_excel(writer,'CVE Details',index=False)
 	writer.save()
 	print ("Completed.")
+	return mailcontent
 
-def sendemail(fileName):
+def sendemail(fileName, mailtext):
 
 	textfile = 'Sending CVE data'
 	message = MIMEMultipart()
@@ -197,7 +208,8 @@ def sendemail(fileName):
 	subject = 'CVE Detail announcement on ' + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 	message['Subject'] = subject
 	message.attach(MIMEText('Latest CVE Detail Announcement List as attached'))
-	
+	message.attach(MIMEText(mailtext))
+
 	part = MIMEBase('application','vnd.ms-excel')
 	part.set_payload(open(fileName, "rb").read())
 	encoders.encode_base64(part)
@@ -248,9 +260,8 @@ def main():
 		count=count+1
 		print ("Getting Details for CVE ID: "+cve+". Completed "+str(count)+" Out of "+str(len(cveArray)))
 	
-	writeToExcel(fileName)
-
-	#sendemail(fileName)
+	mail = writeToExcel(fileName)
+	#sendemail(fileName, mail)
 
 if __name__ == '__main__':
 	status = main()
