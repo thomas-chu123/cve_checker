@@ -20,6 +20,10 @@ from email import encoders
 import datetime
 import re
 
+#import requests.packages.urllib3.util.ssl_
+#print(requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS)
+#requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = 'ALL'
+
 cveIDNumber=[]
 summaryText=[]
 publishDate=[]
@@ -145,7 +149,7 @@ def checkCVE(cveIDList,TextList):
 			keyword.append(x.split(' ')[0])
 		dataFile.close()
 		# print (keyword)
-
+		
 		# matchID = []
 		
 		# if any("abc" in s for s in some_list):
@@ -171,12 +175,15 @@ def writeToExcel(fileName=''):
 		keyword.append(x.split(' ')[0])
 	dataFile.close()
 	#checkCVE(cveIDNumber, summaryText)
-	for key, value in data.items():
-		for v in value:
-			for keystr in keyword:
-				if keystr in v:
-					print (keyword,data.items['Summary Text'])
-
+	# check if there are matched CVE data with the keyword
+	word = ''
+	count = 0
+	for word in keyword:
+				for count in len(cveIDNumber):
+					if word in summaryText[count]: 
+						print ("Found keyword match {0}",word)
+						print (cveIDNumber[count], summaryText[count])
+	
 	df.to_excel(writer,'CVE Details',index=False)
 	writer.save()
 	print ("Completed.")
@@ -243,7 +250,7 @@ def main():
 	
 	writeToExcel(fileName)
 
-	sendemail(fileName)
+	#sendemail(fileName)
 
 if __name__ == '__main__':
 	status = main()
